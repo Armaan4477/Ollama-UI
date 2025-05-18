@@ -169,4 +169,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Ollama UI(windows x64)
-          path: Desktop-app/dist/Ollama UI.exe
+          path: dist/Ollama UI.exe
