@@ -60,6 +60,7 @@ jobs:
       - name: Build for macOS
         run: |
           pyinstaller --windowed \
+          --name="Ollama UI" \
           ollama_client.py
 
       - name: Install create-dmg
