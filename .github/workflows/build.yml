@@ -14,53 +14,37 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip3 install -r Desktop-app/requirements.txt
+          pip3 install -r requirements.txt
           pip3 install pyinstaller
 
       - name: Build for macOS
         run: |
-          cd Desktop-app
           pyinstaller --windowed \
-          --icon=icon.icns \
-          --name="DataDash" \
-          --add-data "icons/*:icons" \
-          --add-data "assets/*:assets" \
-          --add-data "broadcast.py:." \
-          --add-data "constant.py:." \
-          --add-data "portsss.py:." \
-          --add-data "loges.py:." \
-          --add-data "credits_dialog.py:." \
-          --add-data "crypt_handler.py:." \
-          --add-data "file_receiver.py:." \
-          --add-data "file_receiver_android.py:." \
-          --add-data "file_receiver_python.py:." \
-          --add-data "file_sender.py:." \
-          --add-data "file_sender_java.py:." \
-          --add-data "preferences.py:." \
-          main.py
+          --name="Ollama UI" \
+          ollama_client.py
 
       - name: Install create-dmg
         run: brew install create-dmg
 
       - name: Create DMG
         run: |
-          cd Desktop-app/dist
+          cd dist
           create-dmg \
-            --volname "DataDash" \
+            --volname "Ollama UI" \
             --window-pos 200 120 \
             --window-size 400 400 \
             --icon-size 128 \
-            --icon "DataDash.app" 100 150 \
+            --icon "Ollama UI.app" 100 150 \
             --app-drop-link 300 150 \
             --no-internet-enable \
-            "DataDash(macos-x64).dmg" \
-            "DataDash.app"
+            "Ollama UI(macos-x64).dmg" \
+            "Ollama UI.app"
 
       - name: Upload macOS DMG
         uses: actions/upload-artifact@v4
         with:
-          name: DataDash-macOS-x64
-          path: Desktop-app/dist/DataDash(macos-x64).dmg
+          name: Ollama UI-macOS-x64
+          path: dist/Ollama UI(macos-x64).dmg
 
   build-macos-arm:
     runs-on: macos-15
@@ -70,53 +54,36 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip3 install -r Desktop-app/requirements.txt --break-system-packages
+          pip3 install -r requirements.txt --break-system-packages
           pip3 install pyinstaller --break-system-packages
 
       - name: Build for macOS
         run: |
-          cd Desktop-app
           pyinstaller --windowed \
-          --icon=icon.icns \
-          --name="DataDash" \
-          --add-data "icons/*:icons" \
-          --add-data "assets/*:assets" \
-          --add-data "broadcast.py:." \
-          --add-data "constant.py:." \
-          --add-data "portsss.py:." \
-          --add-data "loges.py:." \
-          --add-data "credits_dialog.py:." \
-          --add-data "crypt_handler.py:." \
-          --add-data "file_receiver.py:." \
-          --add-data "file_receiver_android.py:." \
-          --add-data "file_receiver_python.py:." \
-          --add-data "file_sender.py:." \
-          --add-data "file_sender_java.py:." \
-          --add-data "preferences.py:." \
-          main.py
+          ollama_client.py
 
       - name: Install create-dmg
         run: brew install create-dmg
 
       - name: Create DMG
         run: |
-          cd Desktop-app/dist
+          cd dist
           create-dmg \
-            --volname "DataDash" \
+            --volname "Ollama UI" \
             --window-pos 200 120 \
             --window-size 400 400 \
             --icon-size 128 \
-            --icon "DataDash.app" 100 150 \
+            --icon "Ollama UI.app" 100 150 \
             --app-drop-link 300 150 \
             --no-internet-enable \
-            "DataDash(macos-arm).dmg" \
-            "DataDash.app"
+            "Ollama UI(macos-arm).dmg" \
+            "Ollama UI.app"
 
       - name: Upload macOS DMG
         uses: actions/upload-artifact@v4
         with:
-          name: DataDash-macOS-arm
-          path: Desktop-app/dist/DataDash(macos-arm).dmg
+          name: Ollama UI-macOS-arm
+          path: dist/Ollama UI(macos-arm).dmg
      
   build-linux-x64:
     runs-on: ubuntu-22.04
@@ -138,19 +105,19 @@ jobs:
 
       - name: Clean previous builds
         run: |
-          rm -rf Desktop-app/build Desktop-app/dist Desktop-app/DataDash\(linux\ x64\)
+          rm -rf Desktop-app/build Desktop-app/dist Desktop-app/Ollama UI\(linux\ x64\)
 
       - name: Build for Linux x64
         run: |
           cd Desktop-app
-          pyinstaller --onefile --clean --add-data "./icons:icons" --add-data "./assets:assets" --add-data "broadcast.py:." --add-data "constant.py:." --add-data "credits_dialog.py:." --add-data "crypt_handler.py:." --add-data "file_receiver_android.py:." --add-data "file_receiver_python.py:." --add-data "file_receiver_swift.py:." --add-data "file_receiver.py:." --add-data "file_sender_java.py:." --add-data "file_sender_swift.py:." --add-data "file_sender.py:." --add-data "loges.py:." --add-data "portsss.py:." --add-data "preferences.py:." --name=DataDash main.py
-          mv dist/DataDash "../DataDash(linux x64)"
+          pyinstaller --onefile --clean --add-data "./icons:icons" --add-data "./assets:assets" --add-data "broadcast.py:." --add-data "constant.py:." --add-data "credits_dialog.py:." --add-data "crypt_handler.py:." --add-data "file_receiver_android.py:." --add-data "file_receiver_python.py:." --add-data "file_receiver_swift.py:." --add-data "file_receiver.py:." --add-data "file_sender_java.py:." --add-data "file_sender_swift.py:." --add-data "file_sender.py:." --add-data "loges.py:." --add-data "portsss.py:." --add-data "preferences.py:." --name=Ollama UI main.py
+          mv dist/Ollama UI "../Ollama UI(linux x64)"
 
       - name: Upload Linux x64 artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DataDash(linux x64)
-          path: DataDash\(linux\ x64\)
+          name: Ollama UI(linux x64)
+          path: Ollama UI\(linux\ x64\)
 
   build-linux-arm:
     runs-on: ubuntu-22.04-arm
@@ -177,14 +144,14 @@ jobs:
                 --add-data 'file_sender_java.py:.' --add-data 'file_sender_swift.py:.' \
                 --add-data 'file_sender.py:.' --add-data 'loges.py:.' \
                 --add-data 'portsss.py:.' --add-data 'preferences.py:.' \
-                --icon=./logo.png --name=DataDash main.py &&
-              mv dist/DataDash '/workspace/Desktop-app/DataDash(linux arm)'"
+                --icon=./logo.png --name=Ollama UI main.py &&
+              mv dist/Ollama UI '/workspace/Desktop-app/Ollama UI(linux arm)'"
 
       - name: Upload Linux ARM artifact
         uses: actions/upload-artifact@v4
         with:
-          name: DataDash(linux arm)
-          path: Desktop-app/DataDash(linux arm)
+          name: Ollama UI(linux arm)
+          path: Desktop-app/Ollama UI(linux arm)
 
   build-windows-x64:
     runs-on: windows-latest
@@ -207,7 +174,7 @@ jobs:
       - name: Build for Windows x64
         run: |
           cd Desktop-app
-          & pyinstaller --onefile --windowed --uac-admin --icon=logo.ico --name="DataDash" --add-data "icons/*;icons" --add-data "assets/*;assets" --add-data "broadcast.py;." --add-data "constant.py;." --add-data "portsss.py;." --add-data "loges.py;." --add-data "credits_dialog.py;." --add-data "crypt_handler.py;." --add-data "file_receiver.py;." --add-data "file_receiver_android.py;." --add-data "file_receiver_python.py;." --add-data "file_sender.py;." --add-data "file_sender_java.py;." --add-data "preferences.py;."  main.py
+          & pyinstaller --onefile --windowed --uac-admin --icon=logo.ico --name="Ollama UI" --add-data "icons/*;icons" --add-data "assets/*;assets" --add-data "broadcast.py;." --add-data "constant.py;." --add-data "portsss.py;." --add-data "loges.py;." --add-data "credits_dialog.py;." --add-data "crypt_handler.py;." --add-data "file_receiver.py;." --add-data "file_receiver_android.py;." --add-data "file_receiver_python.py;." --add-data "file_sender.py;." --add-data "file_sender_java.py;." --add-data "preferences.py;."  main.py
 
       # - name: Install Inno Setup
       #   run: |
@@ -221,5 +188,5 @@ jobs:
       - name: Upload Windows Installer
         uses: actions/upload-artifact@v4
         with:
-          name: DataDash(windows x64)
-          path: Desktop-app/dist/DataDash.exe
+          name: Ollama UI(windows x64)
+          path: Desktop-app/dist/Ollama UI.exe
