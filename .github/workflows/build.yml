@@ -43,7 +43,7 @@ jobs:
       - name: Upload macOS DMG
         uses: actions/upload-artifact@v4
         with:
-          name: Ollama UI-macOS-x64
+          name: Ollama UI(macOS x64)
           path: dist/Ollama UI(macos-x64).dmg
 
   build-macos-arm:
@@ -83,7 +83,7 @@ jobs:
       - name: Upload macOS DMG
         uses: actions/upload-artifact@v4
         with:
-          name: Ollama UI-macOS-arm
+          name: Ollama UI(macOS arm)
           path: dist/Ollama UI(macos-arm).dmg
      
   build-linux-x64:
@@ -123,25 +123,17 @@ jobs:
 
       - name: Build for Linux ARM using Docker
         run: |
-          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace/Desktop-app \
+          docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace \
             --platform linux/arm64 python:3.13 bash -c "
               pip install pyinstaller && pip install -r requirements.txt &&
-              pyinstaller --onefile --add-data './icons:icons' --add-data './assets:assets' \
-                --add-data 'broadcast.py:.' --add-data 'constant.py:.' \
-                --add-data 'credits_dialog.py:.' --add-data 'crypt_handler.py:.' \
-                --add-data 'file_receiver_android.py:.' --add-data 'file_receiver_python.py:.' \
-                --add-data 'file_receiver_swift.py:.' --add-data 'file_receiver.py:.' \
-                --add-data 'file_sender_java.py:.' --add-data 'file_sender_swift.py:.' \
-                --add-data 'file_sender.py:.' --add-data 'loges.py:.' \
-                --add-data 'portsss.py:.' --add-data 'preferences.py:.' \
-                --icon=./logo.png --name=Ollama UI main.py &&
-              mv dist/Ollama UI '/workspace/Desktop-app/Ollama UI(linux arm)'"
+              pyinstaller --onefile --clean --name "Ollama UI" ollama_client.py &&
+              mv dist/"Ollama UI" "Ollama UI(linux arm)"
 
       - name: Upload Linux ARM artifact
         uses: actions/upload-artifact@v4
         with:
           name: Ollama UI(linux arm)
-          path: Desktop-app/Ollama UI(linux arm)
+          path: "Ollama UI(linux arm)"
 
   build-windows-x64:
     runs-on: windows-latest
