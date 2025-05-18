@@ -124,10 +124,7 @@ jobs:
       - name: Build for Linux ARM using Docker
         run: |
           docker run --rm -v "${{ github.workspace }}:/workspace" -w /workspace \
-            --platform linux/arm64 python:3.13 bash -c "
-              pip install pyinstaller && pip install -r requirements.txt &&
-              pyinstaller --onefile --clean --name "Ollama UI" ollama_client.py &&
-              mv dist/"Ollama UI" "Ollama UI(linux arm)"
+            --platform linux/arm64 python:3.13 bash -c 'pip install pyinstaller && pip install -r requirements.txt && pyinstaller --onefile --clean --name "Ollama UI" ollama_client.py && mv dist/"Ollama UI" "Ollama UI(linux arm)"'
 
       - name: Upload Linux ARM artifact
         uses: actions/upload-artifact@v4
