@@ -99,19 +99,14 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install -r Desktop-app/requirements.txt
+          pip install -r requirements.txt
 
       - name: Install pyinstaller
         run: pip install pyinstaller
 
-      - name: Clean previous builds
-        run: |
-          rm -rf Desktop-app/build Desktop-app/dist Desktop-app/Ollama UI\(linux\ x64\)
-
       - name: Build for Linux x64
         run: |
-          cd Desktop-app
-          pyinstaller --onefile --clean --add-data "./icons:icons" --add-data "./assets:assets" --add-data "broadcast.py:." --add-data "constant.py:." --add-data "credits_dialog.py:." --add-data "crypt_handler.py:." --add-data "file_receiver_android.py:." --add-data "file_receiver_python.py:." --add-data "file_receiver_swift.py:." --add-data "file_receiver.py:." --add-data "file_sender_java.py:." --add-data "file_sender_swift.py:." --add-data "file_sender.py:." --add-data "loges.py:." --add-data "portsss.py:." --add-data "preferences.py:." --name=Ollama UI main.py
+          pyinstaller --onefile --clean --name=Ollama UI ollama_client.py
           mv dist/Ollama UI "../Ollama UI(linux x64)"
 
       - name: Upload Linux x64 artifact
@@ -125,12 +120,6 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
-
-      # - name: Install Docker and QEMU for ARM emulation
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install -y qemu qemu-user-static
-      #     docker run --rm --privileged multiarch/qemu-user-static --reset -p yes
 
       - name: Build for Linux ARM using Docker
         run: |
