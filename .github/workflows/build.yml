@@ -106,14 +106,14 @@ jobs:
 
       - name: Build for Linux x64
         run: |
-          pyinstaller --onefile --clean --name=Ollama UI ollama_client.py
-          mv dist/Ollama UI "../'Ollama UI(linux x64)'"
+          pyinstaller --onefile --clean --name "Ollama UI" ollama_client.py
+          mv dist/"Ollama UI" "Ollama UI(linux x64)"
 
       - name: Upload Linux x64 artifact
         uses: actions/upload-artifact@v4
         with:
           name: Ollama UI(linux x64)
-          path: Ollama UI\(linux\ x64\)
+          path: "Ollama UI(linux x64)"
 
   build-linux-arm:
     runs-on: ubuntu-22.04-arm
